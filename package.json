@@ -1,0 +1,10 @@
+{
+	"name": "mongodb-tutorial",
+	"version": "0.0.1",
+	"author": "Justin Woolley",
+	"main": "index.js",
+	"dependencies" : {
+		"mongodb": "~2.0",
+    "bluebird": "^3.3.4"
+	}
+}
