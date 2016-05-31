@@ -9,13 +9,15 @@ var globals = {
 };
 
 openMongo()
-  .then(connection => {
-    this.connection = connection;
-  })
-  .finally(() =>  {
-    this.connection.close(); 
-  });
+  .then(db => {
+    this.connection = db;
 
+    var collection = db.collection('playercharacters');
+    return collection.find(null).toArray(function(err, result) {
+      console.log(result);   
+      db.close();
+    });
+  });
 
 
 function loadConfig(configName) {
@@ -46,6 +48,13 @@ function openMongo() {
           reject(new Error(err));
         } else { 
           console.log('Connection established to ' + url);
+
+          process.on('SIGINT', function() {
+              console.log('\nClosing mongodb connection.');            
+              db.close();
+              process.exit(0);
+          });
+
           resolve(db);
         }
       });    
